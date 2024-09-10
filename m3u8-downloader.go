@@ -74,7 +74,7 @@ func main() {
 }
 
 func Run() {
-	msgTpl := "[Function]: Multi-threaded download of live streaming m3u8 video\n[Reminder]: Download failed, please use -ht=v2 \n[Reminder]: Download failed, m3u8 address may be nested\n[Reminder] :The download failed in the middle of the progress bar and can be repeated."
+	msgTpl := "[Function]: Multi-threaded download of live streaming m3u8 video\n[Reminder]: If download failed, please use -ht=v2 \n[Reminder]: If download failed, m3u8 address may be nested\n[Reminder]:If the download failed in the middle of the progress bar and can be repeated."
 	fmt.Println(msgTpl)
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	now := time.Now()
