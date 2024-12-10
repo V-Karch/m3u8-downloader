@@ -1,40 +1,40 @@
 # m3u8-downloader
 
-golang 多线程下载直播流m3u8格式的视屏，跨平台。 你只需指定必要的 flag (`u`、`o`、`n`、`ht`) 来运行, 工具就会自动帮你解析 M3U8 文件，并将 TS 片段下载下来合并成一个文件。
+Golang multi-threaded download of live stream m3u8 format video, cross-platform. You only need to specify the necessary flags (`u`, `o`, `n`, `ht`) to run, and the tool will automatically parse the M3U8 file for you and download the TS fragments and merge them into one file.
 
 
-## 功能介绍
+## Function introduction
 
-1. 下载和解析 M3U8
-2. 下载 TS 失败重试 （加密的同步解密)
-3. 合并 TS 片段
+1. Download and parse M3U8
+2. Retry when downloading TS fails (encrypted and synchronized decryption)
+3. Merge TS fragments
 
-> 可以下载岛国小电影  
-> 可以下载岛国小电影  
-> 可以下载岛国小电影    
-> 重要的事情说三遍......
+>You can download small movies from island countries
+>You can download small movies from island countries
+>You can download small movies from island countries
+> Say important things three times...
 
-## 效果展示
+## Effect display
 ![demo](./demo.gif)
 
-## 参数说明：
+## Parameter description:
 
 ```
-- u  m3u8下载地址(http(s)://url/xx/xx/index.m3u8)
-- o  movieName:自定义文件名(默认为movie)不带后缀 (default "movie")
-- n  num:下载线程数(默认24)
-- ht hostType:设置getHost的方式(v1: http(s):// + url.Host + filepath.Dir(url.Path); v2: `http(s)://+ u.Host` (default "v1")
-- c  cookie:自定义请求cookie (例如：key1=v1; key2=v2)
-- r  autoClear:是否自动清除ts文件 (default true)
-- s  InsecureSkipVerify:是否允许不安全的请求(默认0)
-- sp savePath:文件保存的绝对路径(默认为当前路径,建议默认值)(例如：unix:/Users/xxxx ; windows:C:\Documents)
+- u m3u8 download address (http(s)://url/xx/xx/index.m3u8)
+- o movieName: Custom file name (default is movie) without suffix (default "movie")
+- n num: number of download threads (default 24)
+- ht hostType: How to set getHost (v1: http(s):// + url.Host + filepath.Dir(url.Path); v2: `http(s)://+ u.Host` (default " v1")
+- c cookie: Custom request cookie (for example: key1=v1; key2=v2)
+- r autoClear: Whether to automatically clear ts files (default true)
+-s InsecureSkipVerify: Whether to allow insecure requests (default 0)
+- sp savePath: The absolute path where the file is saved (default is the current path, default value is recommended) (for example: unix:/Users/xxxx; windows:C:\Documents)
 ```
 
-默认情况只需要传`u`参数,其他参数保持默认即可。 部分链接可能限制请求频率，可根据实际情况调整 `n` 参数的值。
+By default, only the `u` parameter needs to be passed, and other parameters can be kept as default. Some links may limit the request frequency, and the value of the `n` parameter can be adjusted according to the actual situation.
 
-## 下载
+## download
 
-已经编译好的平台有： [点击下载](https://github.com/llychao/m3u8-downloader/releases)
+The compiled platforms include: [Click to download](https://github.com/llychao/m3u8-downloader/releases)
 
 - m3u8-darwin-amd64
 - m3u8-darwin-arm64
@@ -45,42 +45,42 @@ golang 多线程下载直播流m3u8格式的视屏，跨平台。 你只需指�
 - m3u8-windows-amd64.exe
 - m3u8-windows-arm64.exe
 
-## 用法
+## Usage
 
-### 源码方式
+### Source code method
 
 ```bash
-自己编译：go build -o m3u8-downloader
-简洁使用：./m3u8-downloader  -u=http://example.com/index.m3u8
-完整使用：./m3u8-downloader  -u=http://example.com/index.m3u8 -o=example -n=16 -ht=v1 -c="key1=v1; key2=v2"
+Compile yourself: go build -o m3u8-downloader
+Simple use: ./m3u8-downloader -u=http://example.com/index.m3u8
+Complete use: ./m3u8-downloader -u=http://example.com/index.m3u8 -o=example -n=16 -ht=v1 -c="key1=v1; key2=v2"
 ```
 
-### 二进制方式:
+### Binary mode:
 
-Linux 和 MacOS 和 Windows PowerShell
+Linux and MacOS and Windows PowerShell
 
 ```
-简洁使用：
+Simple to use:
 ./m3u8-linux-amd64 -u=http://example.com/index.m3u8
-./m3u8-darwin-amd64 -u=http://example.com/index.m3u8 
+./m3u8-darwin-amd64 -u=http://example.com/index.m3u8
 .\m3u8-windows-amd64.exe -u=http://example.com/index.m3u8
 
-完整使用：
+Full use:
 ./m3u8-linux-amd64 -u=http://example.com/index.m3u8 -o=example -n=16 -ht=v1 -c="key1=v1; key2=v2"
 ./m3u8-darwin-amd64 -u=http://example.com/index.m3u8 -o=example -n=16 -ht=v1 -c="key1=v1; key2=v2"
 .\m3u8-windows-amd64.exe -u=http://example.com/index.m3u8 -o=example -n=16 -ht=v1 -c="key1=v1; key2=v2"
 ```
 
-## 问题说明
+## Problem description
 
-1.在Linux或者mac平台，如果显示无运行权限，请用chmod 命令进行添加权限
+1. On Linux or Mac platform, if it shows that there is no running permission, please use the chmod command to add permissions.
 ```bash
- # Linux amd64平台
+ # Linux amd64 platform
  chmod 0755 m3u8-linux-amd64
- # Mac darwin amd64平台
+ # Mac darwin amd64 platform
  chmod 0755 m3u8-darwin-amd64
  ```
-2.下载失败的情况,请设置 -ht="v1" 或者 -ht="v2" （默认为 v1）
+2. If the download fails, please set -ht="v1" or -ht="v2" (default is v1)
 ```golang
 func get_host(Url string, ht string) string {
     u, err := url.Parse(Url)
