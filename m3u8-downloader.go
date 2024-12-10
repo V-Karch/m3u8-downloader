@@ -11,7 +11,6 @@ import (
 	"crypto/cipher"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/url"
 	"os"
@@ -219,7 +218,7 @@ func getTsList(host, body string) (tsList []TsInfo) {
 }
 
 func getFromFile() string {
-	data, _ := ioutil.ReadFile("./ts.txt")
+	data, _ := os.ReadFile("./ts.txt")
 	return string(data)
 }
 
@@ -283,7 +282,7 @@ func downloadTsFile(ts TsInfo, download_dir, key string, retries int) {
 			break
 		}
 	}
-	ioutil.WriteFile(curr_path_file, origData, 0666)
+	os.WriteFile(curr_path_file, origData, 0666)
 }
 
 // downloader m3u8 Downloader
@@ -330,7 +329,7 @@ func mergeTs(downloadDir string) string {
 		if f.IsDir() || filepath.Ext(path) != ".ts" {
 			return nil
 		}
-		bytes, _ := ioutil.ReadFile(path)
+		bytes, _ := os.ReadFile(path)
 		_, err = writer.Write(bytes)
 		return err
 	})
