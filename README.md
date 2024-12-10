@@ -34,16 +34,11 @@ By default, only the `u` parameter needs to be passed, and other parameters can 
 
 ## download
 
-The compiled platforms include: [Click to download](https://github.com/llychao/m3u8-downloader/releases)
+The compiled platforms include: [Click to download](https://github.com/V-Karch/m3u8-downloader/releases)
 
-- m3u8-darwin-amd64
-- m3u8-darwin-arm64
-- m3u8-linux-386
+- m3u8-darwin-amd64  
 - m3u8-linux-amd64
-- m3u8-linux-arm64
-- m3u8-windows-386.exe
 - m3u8-windows-amd64.exe
-- m3u8-windows-arm64.exe
 
 ## Usage
 
