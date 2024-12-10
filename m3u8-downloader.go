@@ -14,7 +14,6 @@ import (
 	"log"
 	"net/url"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -139,7 +138,7 @@ func Run() {
 
 	// 5. Output download video information
 	DrawProgressBar("Merging", float32(1), PROGRESS_WIDTH, mv)
-	fmt.Printf("\n[Success] Download and save path: %s | Total time taken: %6.2fs\n", mv, time.Now().Sub(now).Seconds())
+	fmt.Printf("\n[Success] Download and save path: %s | Total time taken: %6.2fs\n", mv, time.Since(now).Seconds())
 }
 
 // Get the host of m3u8 address
@@ -215,11 +214,6 @@ func getTsList(host, body string) (tsList []TsInfo) {
 		}
 	}
 	return
-}
-
-func getFromFile() string {
-	data, _ := os.ReadFile("./ts.txt")
-	return string(data)
 }
 
 // Download ts file
@@ -303,7 +297,6 @@ func downloader(tsList []TsInfo, maxGoroutines int, downloadDir string, key stri
 			downloadTsFile(ts, downloadDir, key, retryies)
 			downloadCount++
 			DrawProgressBar("Downloading", float32(downloadCount)/float32(tsLen), PROGRESS_WIDTH, ts.Name)
-			return
 		}(ts, downloadDir, key, retry)
 	}
 	wg.Wait()
@@ -357,52 +350,6 @@ func pathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
-}
-
-// Execute shell
-func execUnixShell(s string) {
-	cmd := exec.Command("bash", "-c", s)
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err := cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%s", out.String())
-}
-
-func execWinShell(s string) error {
-	cmd := exec.Command("cmd", "/C", s)
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err := cmd.Run()
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%s", out.String())
-	return nil
-}
-
-// windows merge files
-func win_merge_file(path string) {
-	pwd, _ := os.Getwd()
-	os.Chdir(path)
-	execWinShell("copy /b *.ts merge.tmp")
-	execWinShell("del /Q *.ts")
-	os.Rename("merge.tmp", "merge.mp4")
-	os.Chdir(pwd)
-}
-
-// unix Merge files
-func unix_merge_file(path string) {
-	pwd, _ := os.Getwd()
-	os.Chdir(path)
-	//cmd := `ls  *.ts |sort -t "\." -k 1 -n |awk '{print $0}' |xargs -n 1 -I {} bash -c "cat {} >> new.tmp"`
-	cmd := `cat *.ts >> merge.tmp`
-	execUnixShell(cmd)
-	execUnixShell("rm -rf *.ts")
-	os.Rename("merge.tmp", "merge.mp4")
-	os.Chdir(pwd)
 }
 
 // ============================= Encryption and decryption related ==============================
